@@ -41,8 +41,7 @@ object UriUtil {
 
         // 使用':'分割
         val ids = wholeId.split(StringConstant.COLON).toTypedArray()
-        val id: String
-        id = if (ids.size > 1) {
+        val id: String = if (ids.size > 1) {
             ids[1]
         } else {
             ids[0]

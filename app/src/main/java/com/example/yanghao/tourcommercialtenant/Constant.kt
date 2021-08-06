@@ -1,7 +1,7 @@
 package com.example.yanghao.tourcommercialtenant
 
 /**
- * 常量
+ * description: 常量 一般为参数传递使用到的常量，(如：requestCode,resultCode,intent.sharedPreference)
  * @author younghow
  * @date 2021/8/6
  */

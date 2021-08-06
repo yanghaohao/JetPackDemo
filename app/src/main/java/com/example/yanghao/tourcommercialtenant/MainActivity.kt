@@ -4,37 +4,23 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.util.Log
+import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
-import com.example.yanghao.tourcommercialtenant.google.zxing.activity.CaptureActivity
 import okhttp3.*
 import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
 
-    val onClick = View.OnClickListener{
-        startQrCode()
-    }
-
-    val handler:Handler = Handler(Handler.Callback {
-
-        return@Callback false
-    })
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<Button>(R.id.btn_qr).setOnClickListener(onClick)
     }
 
 
@@ -46,7 +32,6 @@ class MainActivity : AppCompatActivity() {
             return
         }
         // 二维码扫码
-        val intent = Intent(this, CaptureActivity::class.java)
         startActivityForResult(intent, Constant.REQ_QR_CODE)
     }
 
@@ -61,7 +46,6 @@ class MainActivity : AppCompatActivity() {
 
             getCouponInfo(scanResult)
             val i:Intent = intent
-            i.setClass(this@MainActivity,HomeActivity::class.java)
             i.putExtra(Constant.INTENT_EXTRA_KEY_QR_SCAN_COUPON,scanResult)
             startActivity(i)
         }
@@ -72,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         when (requestCode) {
             Constant.REQ_PERM_CAMERA ->
                 // 摄像头权限申请
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // 获得授权
                     startQrCode()
                 } else {
@@ -95,8 +79,7 @@ class MainActivity : AppCompatActivity() {
 
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
-                val responseStr = response.body().string()
-                Log.e("asjdhj",responseStr)
+
             }
         })
     }
